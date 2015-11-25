@@ -1,9 +1,7 @@
 (ns frac.core
   (:require [quil.core :as q])
-  (:require [frac.complex :refer :all])
   (:require [seesaw.core :as s]))
-
-;(set! *unchecked-math* :warn-on-boxed)  
+ 
 (def draw? (atom false))  
 (def maxits 50)
 
@@ -49,7 +47,14 @@
 (defn draw []
   (if (= @draw? true) (do (swap! draw? #(not %)) (gen (parsetod (s/config xtext :text)) (parsetod (s/config ytext :text)) (let [g (parsetod (s/config rtext :text))] (if (= g 0) 1 g))))))
 
-(defn click [])
+(defn click []
+  (let [mx (q/mouse-x)
+        my (q/mouse-y)
+        x (parsetod (s/config xtext :text))
+        y (parsetod (s/config ytext :text))
+        s (* 2 (let [g (parsetod (s/config rtext :text))] (if (= g 0) 1 g)))]
+    (s/config! xtext :text (+ x (* (- mx (/ (q/width) 2)) (/ s (q/width)))))
+    (s/config! ytext :text (+ y (* (- my (/ (q/height) 2)) (/ s (q/height)))))))
 
 (q/defsketch example
   :title "Frac"

@@ -1,3 +1,3 @@
 # frac
 
-Generates Mandelbrot fractals using quil
+Generates Mandelbrot fractals using quil and seesaw for gui.
